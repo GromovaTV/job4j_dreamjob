@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -191,5 +192,18 @@ public class DbStore implements Store {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public void reset(String tableName) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("DELETE FROM " + tableName);
+             PreparedStatement psAlt = cn.prepareStatement("ALTER TABLE " + tableName + " ALTER COLUMN ID RESTART WITH 1")
+        ) {
+            ps.execute();
+            psAlt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

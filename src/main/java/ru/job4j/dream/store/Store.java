@@ -11,4 +11,5 @@ public interface Store {
     void save(Candidate candidate);
     Post findById(int id);
     Candidate findCandidateById(int id);
+    void reset(String tableName);
 }
