@@ -36,6 +36,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Фото</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +47,15 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${candidate.name}"/>
+                            </td>
+                            <td>
+                                <img src="<c:url value='/download?name=${candidate.id}.jpg'/>" width="100px" height="100px"/>
+                                <form action="<c:url value='/photoUpload.jsp?id=${candidate.id}'/>" method="post" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-default">Загрузить</button>
+                                </form>
+                                <form action="<c:url value='/photoDelete?name=${candidate.id}.jpg'/>" method="post" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-default">Удалить</button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>
