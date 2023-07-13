@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.store.DbStore" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
@@ -27,14 +28,43 @@
     String id = request.getParameter("id");
 %>
 <div class="container">
-    <h2>Upload image</h2>
-    <%--<form action="<c:url value='/upload'/>" method="post" enctype="multipart/form-data">--%>
-    <form action="<%=request.getContextPath()%>/photoUpload?id=<%=request.getParameter("id")%>" method="post" enctype="multipart/form-data">
-        <div class="checkbox">
-            <input type="file" name="file">
+    <div class="container pt-3">
+        <div class="row">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<%=request.getContextPath()%>/candidates.do">Кандидаты</a>
+                </li>
+                <c:if test="${user != null}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/post/edit.jsp">Добавить вакансию</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/logout.do"> <c:out value="${user.name}"/> | Выйти</a>
+                    </li>
+                </c:if>
+                <c:if test="${user == null}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="<%=request.getContextPath()%>/login.do">Войти</a>
+                    </li>
+                </c:if>
+            </ul>
         </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
+        <div class="row">
+            <h2>Upload image</h2>
+            <form action="<%=request.getContextPath()%>/photoUpload?id=<%=request.getParameter("id")%>" method="post" enctype="multipart/form-data">
+                <div class="checkbox">
+                    <input type="file" name="file">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
