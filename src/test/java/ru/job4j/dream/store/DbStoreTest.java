@@ -21,7 +21,7 @@ public class DbStoreTest {
         Store store = DbStore.instOf();
         Post post = new Post(0, "Java Job");
         store.save(post);
-        Post postInDb = store.findById(post.getId());
+        Post postInDb = store.findPostById(post.getId());
         assertThat(postInDb.getName(), is(post.getName()));
     }
 
@@ -41,7 +41,7 @@ public class DbStoreTest {
         store.save(post);
         Post postUpd = new Post(post.getId(), "Java Junior Job");
         store.save(postUpd);
-        Post postInDb = store.findById(post.getId());
+        Post postInDb = store.findPostById(post.getId());
         assertThat(postInDb.getName(), is(postUpd.getName()));
     }
 

@@ -15,7 +15,7 @@ public class MainStore {
         for (Post post : store.findAllPosts()) {
             System.out.println(post.getId() + " " + post.getName());
         }
-        System.out.println(store.findById(p.getId()).getName());
+        System.out.println(store.findPostById(p.getId()).getName());
         var c = new Candidate(0, "Java Developer");
         store.save(c);
         for (Candidate candidate : store.findAllCandidates()) {
