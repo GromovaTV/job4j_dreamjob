@@ -20,7 +20,7 @@ public class AuthFilter implements Filter {
             chain.doFilter(sreq, sresp);
             return;
         }
-        if (req.getSession().getAttribute("user") == null) {
+        if (req.getSession().getAttribute("user") == null && !uri.endsWith("reg.do")) {
             resp.sendRedirect(req.getContextPath() + "/login.jsp");
             return;
         }

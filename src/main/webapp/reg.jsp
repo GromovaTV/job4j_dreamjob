@@ -24,32 +24,29 @@
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
-                Авторизация
+                Регистрация
             </div>
             <div class="card-body">
-                <div class="container">
-                    <form action="<%=request.getContextPath()%>/auth.do" method="post">
-                        <div class="form-group">
-                            <label>Почта</label>
-                            <input type="text" class="form-control" name="email">
+                <form action="<%=request.getContextPath()%>/reg.do" method="post">
+                    <div class="form-group">
+                        <label>Имя пользователя</label>
+                        <input type="text" class="form-control" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label>Почта</label>
+                        <input type="text" class="form-control" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="text" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <c:if test="${not empty error}">
+                        <div style="color:red; font-weight: bold; margin: 30px 0;">
+                                ${error}
                         </div>
-                        <div class="form-group">
-                            <label>Пароль</label>
-                            <input type="text" class="form-control" name="password">
-                        </div>
-                        <div class="form-group d-flex align-items-center">
-                            <button type="submit" class="btn btn-primary">Войти</button>
-                            <div>
-                                <a class="nav-link" href="<%=request.getContextPath()%>/reg.jsp">Регистрация</a>
-                            </div>
-                        </div>
-                        <c:if test="${not empty error}">
-                            <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                    ${error}
-                            </div>
-                        </c:if>
-                    </form>
-                </div>
+                    </c:if>
+                </form>
             </div>
         </div>
     </div>
