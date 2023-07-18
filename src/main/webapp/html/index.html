@@ -32,6 +32,24 @@
             return true;
         }
     </script>
+    <script>
+        function addRow() {
+        //получаем значение поля usr
+        var name = $('#name').val();
+        var lastName = $('#lastName').val();
+        var gender = $('#gender').val();
+        var descr = $('#descr').val();
+        var tableRows = document.querySelectorAll('#table tr').length;
+        if (validate()) {
+            $('#table tr:last').after(
+                '<tr><th>' + tableRows + '</th>' +
+                '<td>' + name + '</td>' +
+                '<td>' + lastName + '</td>' +
+                '<td>' + gender + '</td>' +
+                '<td>' + descr + '</td></tr>');
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container-fluid">
@@ -64,7 +82,7 @@
         </div>
     </form>
 
-    <table class="table table-bordered table-dark">
+    <table class="table table-bordered table-dark" id="table">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -91,6 +109,7 @@
         </tr>
         </tbody>
     </table>
+    <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
 </div>
 </body>
 </html>
