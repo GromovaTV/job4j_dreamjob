@@ -59,6 +59,7 @@
                     <thead>
                     <tr>
                         <th scope="col">Названия</th>
+                        <th scope="col">Дата</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -69,6 +70,9 @@
                                     <i class="fa fa-edit mr-3"></i>
                                 </a>
                                 <c:out value="${post.name}"/>
+                            </td>
+                            <td>
+                                <c:out value="${post.formattedCreated}"/>
                             </td>
                         </tr>
                     </c:forEach>

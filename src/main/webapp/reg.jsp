@@ -19,6 +19,26 @@
     </script>
     <title>Работа мечты</title>
 </head>
+<script>
+    function validate() {
+        const name = $('#name').val();
+        if (name == "") {
+            alert($('#name').attr('title'));
+            return false;
+        }
+        const email = $('#email').val();
+        if (email == "") {
+            alert($('#email').attr('title'));
+            return false;
+        }
+        const password = $('#password').val();
+        if (password == "") {
+            alert($('#password').attr('title'));
+            return false;
+        }
+        return true;
+    }
+</script>
 <body>
 <div class="container pt-3">
     <div class="row">
@@ -30,20 +50,20 @@
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label>Имя пользователя</label>
-                        <input type="text" class="form-control" name="name">
+                        <input type="text" class="form-control" name="name" id="name" title="Введите имя">
                     </div>
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email">
+                        <input type="text" class="form-control" name="email" id="email" title="Введите почту">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="text" class="form-control" name="password">
+                        <input type="password" class="form-control" name="password" id="password" title="Введите пароль">
                     </div>
-                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Зарегистрироваться</button>
                     <c:if test="${not empty error}">
                         <div style="color:red; font-weight: bold; margin: 30px 0;">
-                                ${error}
+                                <%--${error}--%>
                         </div>
                     </c:if>
                 </form>

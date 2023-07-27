@@ -12,7 +12,8 @@ import java.util.ArrayList;
 public class PostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("posts", new ArrayList<>(DbStore.instOf().findAllPosts()));
+        var posts = DbStore.instOf().findAllPosts();
+        req.setAttribute("posts", new ArrayList<>(posts));
         req.setAttribute("user", req.getSession().getAttribute("user"));
         req.getRequestDispatcher("posts.jsp").forward(req, resp);
     }

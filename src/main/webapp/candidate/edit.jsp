@@ -4,6 +4,7 @@
 <%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
 <%@ page import="ru.job4j.dream.model.User" %>
+<%@ page import="ru.job4j.dream.model.City" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -25,6 +26,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Работа мечты</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+<script>
+    function validate() {
+        const name = $('#name').val();
+        const cities = $('#cities').val();
+        if (name == "") {
+            alert($('#name').attr('title'));
+            return false;
+        }
+        if (cities == "") {
+            alert($('#cities').attr('title'));
+            return false;
+        }
+        return true;
+    }
+</script>
+<script>
+    function addCity() {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/dreamjob/city',
+            data: JSON.stringify({
+                name: $('#city').val()
+            }),
+            dataType: 'json'
+        }).done(function (data) {
+            $('#cities option:last').after('<option>' + data.name + '</option>')
+        }).fail(function (err) {
+            console.log(err);
+        });
+    }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/dreamjob/city',
+            dataType: 'json'
+        }).done(function (data) {
+            for (var city of data) {
+                $('#cities option:last').after('<option>' + city.name + '</option>')
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
+</script>
+<script>
+    console.log("Start");
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            type: 'GET',
+            url: 'http://localhost:8080/dreamjob/city',
+            dataType: 'json'
+        }).done(function (data) {
+            console.log("Done");
+            console.log("Done:" + data);
+            for (var city of data) {
+                console.log(city);
+                // $('#cities option:last').after('<option>' + city.name + '</option>')
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
+</script>
 <body>
 <%
     String id = request.getParameter("id");
@@ -73,10 +140,31 @@
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name" id="name"
+                               title="Введите имя" value="<%=candidate.getName()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label for="cities">Город</label>
+                        <select class="form-control" id="cities" name="cities" title="Выберите город">
+                            <option></option>
+                            <%--<% System.out.println(citiesList); %>--%>
+                            <c:forEach items="${citiesList}" var="city">
+                                <option><c:out value="${city.name}"/></option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
+                <br>
+                <form>
+                    <div class="form-group">
+                        <label for="city" style="font-weight: bold">Другой город</label>
+                        <input type="text" class="form-control" id="city" aria-describedby="emailHelp"
+                               placeholder="Введите город">
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="addCity()">Submit</button>
+                </form>
+                <br>
             </div>
         </div>
     </div>

@@ -22,6 +22,16 @@
     </script>
     <title>Работа мечты</title>
 </head>
+<script>
+    function validate() {
+        const name = $('#name').val();
+        if (name == "") {
+            alert($('#name').attr('title'));
+            return false;
+        }
+        return true;
+    }
+</script>
 <body>
 <%
     String id = request.getParameter("id");
@@ -70,9 +80,10 @@
                 <form action="<%=request.getContextPath()%>/posts.do?id=<%=post.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=post.getName()%>">
+                        <input type="text" class="form-control" id="name" name="name"
+                               title="Введите имя" value="<%=post.getName()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
             </div>
         </div>
