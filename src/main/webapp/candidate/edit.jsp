@@ -46,7 +46,8 @@
     function addCity() {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8080/dreamjob/city',
+            crossDomain: true,
+            url: '/dreamjob/city',
             data: JSON.stringify({
                 name: $('#city').val()
             }),
@@ -61,7 +62,8 @@
     $(document).ready(function () {
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:8080/dreamjob/city',
+            crossDomain: true,
+            url: '/dreamjob/city',
             dataType: 'json'
         }).done(function (data) {
             for (var city of data) {
@@ -78,7 +80,8 @@
         $.ajax({
             cache: false,
             type: 'GET',
-            url: 'http://localhost:8080/dreamjob/city',
+            crossDomain: true,
+            url: '/dreamjob/city',
             dataType: 'json'
         }).done(function (data) {
             console.log("Done");
