@@ -4,6 +4,7 @@ import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
 public class MainStore {
+
     public static void main(String[] args) {
         Store store = DbStore.instOf();
         var p = new Post(0, "Java Job");

@@ -1,6 +1,7 @@
 package ru.job4j.dream.model;
 
 public class City {
+
     private int id;
     private String name;
 

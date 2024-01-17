@@ -1,6 +1,9 @@
 package ru.job4j.dream.store;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.Post;
 
@@ -8,7 +11,11 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 public class DbStoreTest {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DbStoreTest.class.getName());
+
     @Before
     public void reset() {
         Store store = DbStore.instOf();
@@ -28,7 +35,7 @@ public class DbStoreTest {
     @Test
     public void whenCreateCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Java Job");
+        Candidate candidate = new Candidate(0, "Java Job", 1);
         store.save(candidate);
         Candidate candidateInDb = store.findCandidateById(candidate.getId());
         assertThat(candidateInDb.getName(), is(candidate.getName()));
@@ -48,7 +55,7 @@ public class DbStoreTest {
     @Test
     public void whenUpdCandidate() {
         Store store = DbStore.instOf();
-        Candidate candidate = new Candidate(0, "Java Job");
+        Candidate candidate = new Candidate(0, "Java Job", 1);
         store.save(candidate);
         Candidate candidateUpd = new Candidate(candidate.getId(), "Java Junior Job");
         store.save(candidateUpd);
@@ -58,9 +65,12 @@ public class DbStoreTest {
 
     @Test
     public void whenFindAllPost() {
+        LOG.info("Start FindAllPost TEST");
         Store store = DbStore.instOf();
         Post post1 = new Post(0, "Java Job");
+        LOG.info(post1.getCreated().toString());
         store.save(post1);
+        LOG.info(post1.toString());
         Post post2 = new Post(0, "Java Job");
         store.save(post2);
         var posts = store.findAllPosts();
@@ -71,9 +81,9 @@ public class DbStoreTest {
     @Test
     public void whenFindAllCandidates() {
         Store store = DbStore.instOf();
-        Candidate candidate1 = new Candidate(0, "Java Job");
+        Candidate candidate1 = new Candidate(0, "Java Job", 1);
         store.save(candidate1);
-        Candidate candidate2 = new Candidate(0, "Java Job");
+        Candidate candidate2 = new Candidate(0, "Java Job", 2);
         store.save(candidate2);
         var candidates = store.findAllCandidates();
         assertThat(candidates, is(List.of(candidate1, candidate2)));

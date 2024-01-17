@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Post {
+
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
     private int id;
     private String name;
@@ -18,7 +19,6 @@ public class Post {
         this.name = name;
         this.created = LocalDateTime.now();
         this.formattedCreated = created.format(FORMATTER);
-
     }
 
     public Post(int id, String name, Timestamp timestamp) {
@@ -71,8 +71,12 @@ public class Post {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Post post = (Post) o;
         return id == post.id;
     }

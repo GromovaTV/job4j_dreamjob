@@ -77,7 +77,7 @@
                             </td>
                             <td>
                                 <c:forEach items="${citiesList}" var="city">
-                                    <c:if test="${city.id == candidate.city_id}">
+                                    <c:if test="${city.id == candidate.cityId}">
                                         <c:out value="${city.name}"/>
                                     </c:if>
                                 </c:forEach>

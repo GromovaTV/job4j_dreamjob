@@ -3,6 +3,7 @@ package ru.job4j.dream.servlet;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.dream.model.Email;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GreetingServlet extends HttpServlet {
+
     private final List<Email> emails = new CopyOnWriteArrayList<>();
     private static final Gson GSON = new GsonBuilder().create();
 

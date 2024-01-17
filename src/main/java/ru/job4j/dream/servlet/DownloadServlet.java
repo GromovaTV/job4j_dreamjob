@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class DownloadServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
@@ -21,7 +22,7 @@ public class DownloadServlet extends HttpServlet {
         }
         resp.setContentType("application/octet-stream");
         resp.setHeader("Content-Disposition", "attachment; filename=\"" + downloadFile.getName() + "\"");
-        try (FileInputStream stream = new FileInputStream(downloadFile)){
+        try (FileInputStream stream = new FileInputStream(downloadFile)) {
             resp.getOutputStream().write(stream.readAllBytes());
         }
     }

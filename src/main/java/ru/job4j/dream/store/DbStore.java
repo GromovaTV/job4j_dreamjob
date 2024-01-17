@@ -5,6 +5,7 @@ import ru.job4j.dream.model.Candidate;
 import ru.job4j.dream.model.City;
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.model.User;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
@@ -14,8 +15,14 @@ import java.util.List;
 import java.util.Properties;
 
 public class DbStore implements Store {
-    private static final DbStore instance = new DbStore();
-    private final BasicDataSource pool = new BasicDataSource();
+
+    private static final DbStore STORE = new DbStore();
+    private BasicDataSource pool = new BasicDataSource();
+
+    public void setPool(BasicDataSource pool) {
+        this.pool = pool;
+    }
+
     private DbStore() {
         Properties cfg = new Properties();
         try (BufferedReader io = new BufferedReader(
@@ -92,7 +99,7 @@ public class DbStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    users.add(new User(it.getInt("id"),it.getString("name"),
+                    users.add(new User(it.getInt("id"), it.getString("name"),
                             it.getString("email"), it.getString("password")));
                 }
             }
@@ -161,7 +168,7 @@ public class DbStore implements Store {
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getCity_id());
+            ps.setInt(2, candidate.getCityId());
             ps.setTimestamp(3, Timestamp.valueOf(candidate.getCreated()));
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
@@ -229,12 +236,12 @@ public class DbStore implements Store {
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE candidate set name = ?," +
-                             " city_id = ? where id = ?",
+             PreparedStatement ps = cn.prepareStatement("UPDATE candidate set name = ?,"
+                             + " city_id = ? where id = ?",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
-            ps.setInt(2, candidate.getCity_id());
+            ps.setInt(2, candidate.getCityId());
             ps.setInt(3, candidate.getId());
             ps.execute();
         } catch (Exception e) {
@@ -357,8 +364,8 @@ public class DbStore implements Store {
     public Collection<Post> getRecentPosts() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post" +
-                     " WHERE created BETWEEN NOW() - INTERVAL '1 DAY' AND NOW();")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post"
+                     + " WHERE created BETWEEN NOW() - INTERVAL '1 DAY' AND NOW();")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -376,8 +383,8 @@ public class DbStore implements Store {
     public Collection<Candidate> getRecentCandidates() {
         List<Candidate> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate" +
-                     " WHERE created BETWEEN NOW() - INTERVAL '1 DAY' AND NOW();")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate"
+                     + " WHERE created BETWEEN NOW() - INTERVAL '1 DAY' AND NOW();")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.job4j.dream.model.City;
 import ru.job4j.dream.store.DbStore;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class CityServlet  extends HttpServlet {
+
     private static final Gson GSON = new GsonBuilder().create();
 
     @Override
